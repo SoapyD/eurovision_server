@@ -1,0 +1,29 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon",
+    "start": "node index.js"    
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "http": "0.0.1-security",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^6.9.2",
+    "passport": "^0.6.0",
+    "passport-jwt": "^4.0.1",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^7.1.2",
+    "socket.io": "^4.5.3"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.3"
+  }
+}
