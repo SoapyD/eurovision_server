@@ -11,15 +11,20 @@ const classes = require('./classes');
 const express = require("express");
 const app = express();
 
-const http = require('http')
-const { Server } = require('socket.io');
-
 const middleware = require('./middleware');
 middleware.setup.run(app)
 
-const server = http.createServer(app)
-const io = new Server(server)
+let expressServer;
 
+expressServer = app.listen(process.env.SERVER_PORT, process.env.IP, function(){
+	console.log(`SERVER IS RUNNING ON PORT ${process.env.SERVER_PORT}`)
+})		
+
+
+// const http = require('http')
+// const { Server } = require('socket.io');
+// const server = http.createServer(app)
+// const io = new Server(server)
 
 /*
 io.on("connection", (socket) => {
@@ -39,16 +44,15 @@ io.on("connection", (socket) => {
 })
 */
 
-global.socketHandler = new classes.server_game_socket_handler({
-	namespace: "/"
-	,io: io
-});
+// global.socketHandler = new classes.server_game_socket_handler({
+// 	namespace: "/"
+// 	,io: io
+// });
 
-socketHandler.checkMessages();
+// socketHandler.checkMessages();
 
-
-server.listen(process.env.SERVER_PORT, () => {
-	console.log(`SERVER IS RUNNING ON PORT ${process.env.SERVER_PORT}`)
-})
+// server.listen(process.env.SERVER_PORT, () => {
+// 	console.log(`SERVER IS RUNNING ON PORT ${process.env.SERVER_PORT}`)
+// })
 
 
