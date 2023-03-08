@@ -20,6 +20,9 @@ expressServer = app.listen(process.env.SERVER_PORT, process.env.IP, function(){
 	console.log(`SERVER IS RUNNING ON PORT ${process.env.SERVER_PORT}`)
 })		
 
+app.get('/', (req,res) => {
+	res.send('TEST')
+})
 
 // const http = require('http')
 // const { Server } = require('socket.io');
