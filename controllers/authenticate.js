@@ -146,6 +146,8 @@ exports.logout = (req,res) => {
 	const { refreshToken } = signedCookies
 	// const { cookies = {} } = req
 	// const { refreshToken } = cookies
+
+	console.log('refreshToken', refreshToken)
 	
 	User.findById(req.user._id).then(
 	  user => {
