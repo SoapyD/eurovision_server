@@ -16,7 +16,7 @@ middleware.setup.run(app)
 
 let expressServer;
 
-expressServer = app.listen(process.env.SERVER_PORT, process.env.IP, function(){
+expressServer = app.listen(process.env.SERVER_PORT||8080, process.env.IP, function(){
 	console.log(`SERVER IS RUNNING ON PORT ${process.env.SERVER_PORT}`)
 })		
 
