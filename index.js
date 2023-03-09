@@ -12,7 +12,7 @@ const express = require("express");
 const app = express();
 
 const middleware = require('./middleware');
-middleware.setup.run(app)
+let corsOptions = middleware.setup.run(app)
 
 let expressServer;
 
@@ -29,8 +29,12 @@ app.get('/', (req,res) => {
 // const { Server } = require('socket.io');
 // const server = http.createServer(app)
 // const io = new Server(server)
+const socketio = require('socket.io');
+// const io = socketio(expressServer, { cors: { origin: '*' } });
+const io = socketio(expressServer, { cors: corsOptions });
+// console.log(corsOptions)
 
-/*
+/**/
 io.on("connection", (socket) => {
 	console.log(`User Connected ${socket.id}`)
 
@@ -46,7 +50,7 @@ io.on("connection", (socket) => {
 		// console.log(`Message: ${data}`)
 	});
 })
-*/
+
 
 // global.socketHandler = new classes.server_game_socket_handler({
 // 	namespace: "/"

@@ -89,5 +89,5 @@ exports.run = async(app) => {
     utils.seeder.resetRooms();
 
 	*/
-
+    return corsOptions
 }
