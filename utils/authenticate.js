@@ -9,7 +9,7 @@ exports.COOKIE_OPTIONS = {
   secure: !dev,
   signed: true,
   maxAge: eval(process.env.REFRESH_TOKEN_EXPIRY) * 1000,
-  sameSite: "none", //CURRENTLY TURNED OFF AS IT'S STOPPING SIGNED COOKIES PASSING FROM CLIENT
+  sameSite: "None", //CURRENTLY TURNED OFF AS IT'S STOPPING SIGNED COOKIES PASSING FROM CLIENT
 }
 
 exports.getToken = user => {
