@@ -77,6 +77,7 @@ exports.run = async(app) => {
     }
 
     app.use(cors(corsOptions))
+    app.set("trust proxy", 1);
 
     //automatically setup routes along route paths
     for (const [key, value] of Object.entries(routes)) {
