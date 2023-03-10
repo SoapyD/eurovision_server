@@ -1,6 +1,10 @@
 const passport = require("passport")
 const jwt = require("jsonwebtoken")
 const dev = process.env.INSTANCE_TYPE !== "prod"
+let sameSite = 'None'
+if (process.env.INSTANCE_TYPE !== "prod"){
+  sameSite = 'Lax'
+}
 
 exports.COOKIE_OPTIONS = {
   httpOnly: true,
@@ -9,7 +13,7 @@ exports.COOKIE_OPTIONS = {
   secure: !dev,
   signed: true,
   maxAge: eval(process.env.REFRESH_TOKEN_EXPIRY) * 1000,
-  sameSite: "None", //CURRENTLY TURNED OFF AS IT'S STOPPING SIGNED COOKIES PASSING FROM CLIENT
+  sameSite: sameSite, //CURRENTLY TURNED OFF AS IT'S STOPPING SIGNED COOKIES PASSING FROM CLIENT
 }
 
 exports.getToken = user => {
