@@ -78,16 +78,16 @@ exports.refreshToken = (req,res, next) => {
 	// const { cookies = {} } = req
 	// const { refreshToken } = cookies
 
-	// if (req.cookies.refreshToken){
-	// 	console.log('cookie: ',req.cookies.refreshToken)
-	// }else{
-	// 	console.log('blank cookie')
-	// }
-	// if (req.signedCookies.refreshToken){
-	// 	console.log('signedCookies: ',req.signedCookies.refreshToken)
-	// }else{
-	// 	console.log('blank signedCookies')
-	// }
+	if (req.cookies.refreshToken){
+		console.log('cookie: ',req.cookies.refreshToken)
+	}else{
+		console.log('blank cookie')
+	}
+	if (req.signedCookies.refreshToken){
+		console.log('signedCookies: ',req.signedCookies.refreshToken)
+	}else{
+		console.log('blank signedCookies')
+	}
   
 	if (refreshToken) {
 		try {
@@ -146,8 +146,6 @@ exports.logout = (req,res) => {
 	const { refreshToken } = signedCookies
 	// const { cookies = {} } = req
 	// const { refreshToken } = cookies
-
-	console.log('refreshToken', refreshToken)
 	
 	User.findById(req.user._id).then(
 	  user => {
