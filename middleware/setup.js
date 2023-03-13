@@ -9,7 +9,7 @@ const passport = require("passport");
 
 const controllers = require('../controllers');
 const routes = require("../routes");
-// const utils = require("../utils");
+const utils = require("../utils");
 
 const strategies = require('./strategies')
 
@@ -83,11 +83,9 @@ exports.run = async(app) => {
         app.use(routes[key].path,routes[key]);
     } 
     
-    /*
-    app.use(controllers.error.get404);
 
-    utils.seeder.resetRooms();
+    utils.seeder.refreshAll.run();
 
-	*/
+ 
     return corsOptions
 }
