@@ -30,6 +30,31 @@ const mongoose_db_handler = class {
 
     getPopulateLists = (type) => {
         let populate_list = [];
+
+        switch(type){
+            case 'Act':
+                populate_list.push({
+                    path: "country",
+                    model: "Country"})
+                break;
+            case 'Event':
+                populate_list.push({
+                    path: "acts",
+                    populate: 
+                    [
+                        {
+                            path: 'act', 
+                            model: 'Act',
+                            populate: 
+                            [
+                                {path: 'country'}
+                            ]
+                        },
+                    ]
+                    })
+                break;                
+        }
+
         return populate_list;
     }
 

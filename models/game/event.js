@@ -5,10 +5,14 @@ const eventSchema = new mongoose.Schema({
 	name: String
     ,order: Number
     ,year: Number
-    ,acts: [{ 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Act' 
-    }]    
+    ,acts: [{
+        act: { 
+            type: mongoose.Schema.Types.ObjectId, 
+            ref: 'Act' 
+        }
+        ,order: Number
+    }
+    ]    
 });
 
 

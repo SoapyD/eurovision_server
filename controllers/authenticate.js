@@ -136,8 +136,15 @@ exports.refreshToken = (req,res, next) => {
 	}
 }
 
-exports.me = (req,res) => {
-	res.send(req.user)
+exports.me = async(req,res) => {
+
+    let events = await databaseHandler.findData({
+        model: "Event"
+        ,search_type: "find"
+    })
+    events = events[0];
+
+	res.send({user: req.user, room: 'test room', event_id: 0, events: events})
 }
 
 

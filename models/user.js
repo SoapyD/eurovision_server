@@ -11,12 +11,7 @@ const mongoose = require("mongoose"),
 	const userSchema = new mongoose.Schema({
 		userName: String,
 		password: String,
-		role: String,
 
-		room: {
-			type: String,
-			default: "test room",
-		},		
 		authStrategy: {
 			type: String,
 			default: "local",
