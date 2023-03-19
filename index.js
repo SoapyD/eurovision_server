@@ -5,7 +5,7 @@ if(!process.env.INSTANCE_TYPE){
 
 
 const classes = require('./classes');
-// const utils = require("./utils");
+const utils = require("./utils");
 
 
 const express = require("express");
@@ -20,47 +20,5 @@ expressServer = app.listen(process.env.SERVER_PORT||8080, process.env.IP, functi
 	console.log(`SERVER IS RUNNING ON PORT ${process.env.SERVER_PORT}`)
 })		
 
-app.get('/', (req,res) => {
-	res.send('TEST')
-})
-
-
-// const http = require('http')
-// const { Server } = require('socket.io');
-// const server = http.createServer(app)
-// const io = new Server(server)
-const socketio = require('socket.io');
-// const io = socketio(expressServer, { cors: { origin: '*' } });
-const io = socketio(expressServer, { cors: corsOptions });
-// console.log(corsOptions)
-
-/**/
-io.on("connection", (socket) => {
-	console.log(`User Connected ${socket.id}`)
-
-	socket.on("join_room", (data) => {
-		socket.join(data);
-		console.log(`Room Joined: ${data}`)
-	});
-	
-	socket.on("send_message", (data) => {
-		// socket.to(data.room).emit("receive_message", data);
-		io.to(data.room).emit("receive_message", data)
-		console.log(data)
-		// console.log(`Message: ${data}`)
-	});
-})
-
-
-// global.socketHandler = new classes.server_game_socket_handler({
-// 	namespace: "/"
-// 	,io: io
-// });
-
-// socketHandler.checkMessages();
-
-// server.listen(process.env.SERVER_PORT, () => {
-// 	console.log(`SERVER IS RUNNING ON PORT ${process.env.SERVER_PORT}`)
-// })
-
+utils.socket.setup(expressServer, corsOptions)
 

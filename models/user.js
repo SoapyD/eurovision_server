@@ -9,7 +9,7 @@ const mongoose = require("mongoose"),
 	})
 	
 	const userSchema = new mongoose.Schema({
-		userName: String,
+		username: String,
 		password: String,
 
 		authStrategy: {

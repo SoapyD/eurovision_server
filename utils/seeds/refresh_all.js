@@ -1,6 +1,7 @@
 const country = require("./country");
 const act = require("./act");
 const event = require("./event");
+const room = require("./room");
 
 
 exports.run = async() => {
@@ -11,13 +12,8 @@ exports.run = async() => {
     await event.reset();
     await event.create();        
 
-
-    let events = await databaseHandler.findData({
-        model: "Event"
-        ,search_type: "find"
-    })
-    events = events[0];
-    let act_0 = events[0].acts[0].act;
+    await room.reset();
+    await room.create();
 
     console.log("Refresh Complete")
 }

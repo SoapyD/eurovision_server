@@ -52,7 +52,30 @@ const mongoose_db_handler = class {
                         },
                     ]
                     })
-                break;                
+                break;
+            case 'Room':
+                populate_list.push({
+                    path: "users",
+                    populate: 
+                    [
+                        {path: 'user'},
+                        {
+                            path: "scores",
+                            populate: 
+                            [
+                                {
+                                    path: 'act', 
+                                    model: 'Act',
+                                    populate: 
+                                    [
+                                        {path: 'country'}
+                                    ]                                    
+                                },
+                            ]
+                        }
+                    ]
+                    })
+                break;                                
         }
 
         return populate_list;
@@ -92,7 +115,6 @@ const mongoose_db_handler = class {
             })
         }
         else{
-
             promises.push(this.models[options.model][options.search_type](options.params).sort(options.sort).populate(populate_list))
         }
 
@@ -101,6 +123,7 @@ const mongoose_db_handler = class {
             console.log(err)
         })    
     }
+
 
 
     //  #####  ######  #######    #    ####### #######       ######  #######  #####  ####### ######  ######  
@@ -167,14 +190,9 @@ const mongoose_db_handler = class {
     updateOne = async(options) => {
         let promises = [];
 
-        // if(options.model == 'GameData'){
-
-        // }
-
         if(options.params){
             options.params.forEach((item) => {
-                // promises.push(this.models[options.model].updateOne(item.filter, item.value))
-                promises.push(this.models[options.model].findOneAndUpdate(item.filter, item.value, {new: true}))
+                 promises.push(this.models[options.model].findOneAndUpdate(item.filter, item.value, {new: true}))
             })            
         }
 
@@ -183,6 +201,16 @@ const mongoose_db_handler = class {
             console.log(err)
         })         
     }
+
+    // updateOne = async(options) => {
+    //     let promises = [];
+
+    //     if(options.params){
+    //         options.params.forEach((item) => {
+    //             this.models[options.model].updateOne(item.filter, item.value).exec()
+    //         })            
+    //     }
+    // }
 
 
     // ######  #######  #####  ####### ######  ####### #     #       ######     #    #######    #    
