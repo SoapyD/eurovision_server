@@ -8,7 +8,7 @@ const checkJoined = async(params) => {
 		}
 	});
 
-	console.log('search index:',index, 'array length:',params.room.users.length)
+	// console.log('search index:',index, 'array length:',params.room.users.length)
 
 	if (index == -1){
 		console.log('Adding User')
@@ -38,7 +38,7 @@ exports.setup = (expressServer, corsOptions) => {
 
 
 	io.on("connection", (socket) => {
-		console.log(`User Connected ${socket.id}`)
+		// console.log(`User Connected ${socket.id}`)
 
 		socket.on("join_room", async(data) => {
 			socket.join(data.room_name);
@@ -68,18 +68,107 @@ exports.setup = (expressServer, corsOptions) => {
 				,room: room
 			})
 
-			console.log(`Room Joined: ${data.room_name}`)
+			// console.log(`Room Joined: ${data.room_name}`)
+
+			// GET USER INDEX
+			let user_index = room.users.findIndex( element => {
+				if (element.user.username === data.message.username) {
+					return true;
+				}
+			});
+			// console.log('USER INDEX:',user_index)			
+
+			if(user_index != -1){
+				//GET ALL SCORES FOR COUNTRIES
+				let user_scores = room.users[user_index].scores
+
+				user_scores.forEach((user_score, score_index) => {
+
+					//SET ALL SLIDER SCORES
+					if(user_score.song > 0){
+						io.to(data.room_name).emit("receive_score", {
+							score: user_score.song, 
+							country: user_score.act.country.name,
+							sliderType: 'song'
+						})		
+					}
+					if(user_score.staging > 0){
+						io.to(data.room_name).emit("receive_score", {
+							score: user_score.staging, 
+							country: user_score.act.country.name,
+							sliderType: 'staging'
+						})		
+					}
+
+
+					// IF THE PLAYER HAS SET EITHER SCORE
+					if(user_score.song > 0 || user_score.staging > 0){
+
+						let scores = []
+						for(let i=0;i<=10;i++){
+							scores.push({song: 0, staging: 0})
+						}
+						//SET ALL GRAPH SCORES
+						room.users.forEach((user) => {
+							let score = user.scores[score_index];
+							if(score.song > 0){
+								scores[score.song].song += 1;
+							}
+							if(score.staging > 0){
+								scores[score.staging].staging += 1;
+							}							
+						})
+						// console.log(scores)
+						io.to(data.room_name).emit("receive_chart", {
+							scores: scores, 
+							country: user_score.act.country.name 
+						})
+
+						//SET ALL GROUP SCORES
+						let song = {total: 0.0, entries: 0.0, avg: 0}
+						let staging = {total: 0, entries: 0, avg: 0}
+						scores.forEach((score, i) => {
+							if(score.song > 0){
+								song.total += i
+								song.entries += 1
+							}
+							if(score.staging > 0){
+								staging.total += i
+								staging.entries += 1
+							}							
+						})
+
+						song.avg = Math.round(song.total / song.entries)
+						staging.avg = Math.round(staging.total / staging.entries)
+						let total = song.avg + staging.avg
+						
+						io.to(data.room_name).emit("receive_groupScore", {
+							song: song.avg,
+							staging: staging.avg,
+							total: total,
+							country: user_score.act.country.name 
+						})		
+
+					}
+
+				})
+			}
+
+			
+
+
+
 		});
 		
 		socket.on("send_message", (data) => {
 			io.to(data.room_name).emit("receive_message", data)
-			console.log(data)
+			// console.log(data)
 			// console.log(`Message: ${data}`)
 		});
 
 		socket.on("send_score", async(data) => {
 			// io.to(data.room_name).emit("receive_message", data)
-			console.log(data)
+			// console.log(data)
 
 			//GET ROOM
 			let room = await databaseHandler.findData({
@@ -126,6 +215,14 @@ exports.setup = (expressServer, corsOptions) => {
 						}                            
 						databaseHandler.updateOne(update_options)
 						
+						//SEND BACK TO SCORE SO THE USERS SLIDER CAN BE UPDATED
+						io.to(data.room_name).emit("receive_score", {
+							score: data.message.value, 
+							country: data.message.country,
+							sliderType: data.message.sliderType
+						})						
+
+
 						//LOOP AND GET SCORES FOR SONG, KEEP ELEMENT COUNT OF NUMBER OF USERS SCORING FOR EACH ITTERATION
 						let scores = []
 						for(let i=0;i<=10;i++){

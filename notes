@@ -1,0 +1,22 @@
+-DONE -remove test messenger on landing screen and replace with instructions of how to use the app
+-DONE -put text saying what the two score sliders are are
+
+
+-if a player has already scored a song and they load back in, reload their scores in the score fields and show the group scores
+    -DONE -Move setScore slider process so it updates from the socket
+    -When a room is joined, check to see if a user has already set any scores then send to follow item updates
+        -DONE -slider score
+            -Make sure slider value is also set
+        -DONE -graph scores
+        -DONE -group scores
+
+-Sweepstakes
+    -Setup a number of avatar pictures people can select when creating a user
+    -Allow the user to subscribe to a room
+    -Have as sweepstakes tab for creator that allows them to see who's registered
+    -create button that can be pressed to randomly allocate registered users to countries evenly
+    -any remaining counties are assigned to a charity
+
+
+-room.js seeder sets the event being used in the room
+    -move this to a dropdown in the room maybe so users can select what event to join?
