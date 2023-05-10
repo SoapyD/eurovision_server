@@ -86,14 +86,14 @@ exports.setup = (expressServer, corsOptions) => {
 
 					//SET ALL SLIDER SCORES
 					if(user_score.song > 0){
-						io.to(data.room_name).emit("receive_score", {
+						io.to(socket.id).emit("receive_score", {
 							score: user_score.song, 
 							country: user_score.act.country.name,
 							sliderType: 'song'
 						})		
 					}
 					if(user_score.staging > 0){
-						io.to(data.room_name).emit("receive_score", {
+						io.to(socket.id).emit("receive_score", {
 							score: user_score.staging, 
 							country: user_score.act.country.name,
 							sliderType: 'staging'
@@ -216,7 +216,7 @@ exports.setup = (expressServer, corsOptions) => {
 						databaseHandler.updateOne(update_options)
 						
 						//SEND BACK TO SCORE SO THE USERS SLIDER CAN BE UPDATED
-						io.to(data.room_name).emit("receive_score", {
+						io.to(socket.id).emit("receive_score", {
 							score: data.message.value, 
 							country: data.message.country,
 							sliderType: data.message.sliderType

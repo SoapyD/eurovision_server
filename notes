@@ -1,12 +1,15 @@
+
+-individual scores not work but the graph and combined scores are wrong
+
 -DONE -remove test messenger on landing screen and replace with instructions of how to use the app
 -DONE -put text saying what the two score sliders are are
 
 
--if a player has already scored a song and they load back in, reload their scores in the score fields and show the group scores
+-DONE -if a player has already scored a song and they load back in, reload their scores in the score fields and show the group scores
     -DONE -Move setScore slider process so it updates from the socket
-    -When a room is joined, check to see if a user has already set any scores then send to follow item updates
+    -DONE -When a room is joined, check to see if a user has already set any scores then send to follow item updates
         -DONE -slider score
-            -Make sure slider value is also set
+            -DONE -Make sure slider value is also set
         -DONE -graph scores
         -DONE -group scores
 
