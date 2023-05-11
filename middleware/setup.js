@@ -84,7 +84,7 @@ exports.run = async(app) => {
     } 
     
 
-    utils.seeder.refreshAll.run();
+    // utils.seeder.refreshAll.run();
 
  
     return corsOptions
