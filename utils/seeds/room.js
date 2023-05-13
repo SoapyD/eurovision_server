@@ -17,7 +17,7 @@ exports.create = async() => {
         [
             {
                 room_name: 'test room'
-                ,event: 'Semi-Final 1'
+                ,event: 'Final'
             }            
         ]
     }
