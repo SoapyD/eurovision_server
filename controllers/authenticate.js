@@ -144,7 +144,7 @@ exports.me = async(req,res) => {
     })
     events = events[0];
 
-	res.send({user: req.user, room_name: 'test room', event_id: 1, events: events})
+	res.send({user: req.user, room_name: 'test room', event_id: 2, events: events})
 }
 
 
